@@ -90,8 +90,8 @@
   <ItemGroup>
     <Content Include="Entities\SpeedInvoices.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SpeedInvoices.Context.cs</LastGenOutput>
       <DependentUpon>SpeedInvoices.edmx</DependentUpon>
+      <LastGenOutput>SpeedInvoices.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Entities\SpeedInvoices.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -103,6 +103,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\EtatController.cs" />
+    <Compile Include="Controllers\FactureController.cs" />
+    <Compile Include="Controllers\PrestationController.cs" />
+    <Compile Include="Controllers\StructureController.cs" />
     <Compile Include="Entities\Client.cs">
       <DependentUpon>SpeedInvoices.tt</DependentUpon>
     </Compile>
@@ -156,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

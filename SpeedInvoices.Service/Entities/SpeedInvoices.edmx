@@ -39,7 +39,6 @@
           <Property Name="IdEtat" Type="int" Nullable="false" />
           <Property Name="IdClient" Type="int" Nullable="false" />
           <Property Name="IdStructure" Type="int" Nullable="false" />
-          <Property Name="IdPrestation" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Prestation">
           <Key>
@@ -49,6 +48,9 @@
           <Property Name="Intitule" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PrixUnitaire" Type="int" Nullable="false" />
+          <Property Name="Quantite" Type="int" Nullable="false" />
+          <Property Name="PrixTotal" Type="int" Nullable="false" />
+          <Property Name="IdFacture" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Structure">
           <Key>
@@ -72,18 +74,6 @@
             </Principal>
             <Dependent Role="Facture">
               <PropertyRef Name="IdClient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FKFacture292552">
-          <End Role="Prestation" Type="Self.Prestation" Multiplicity="1" />
-          <End Role="Facture" Type="Self.Facture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Prestation">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Facture">
-              <PropertyRef Name="IdPrestation" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -111,6 +101,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FKPrestation198894">
+          <End Role="Facture" Type="Self.Facture" Multiplicity="1" />
+          <End Role="Prestation" Type="Self.Prestation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prestation">
+              <PropertyRef Name="IdFacture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SpeedInvoicesModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Etat" EntityType="Self.Etat" Schema="dbo" store:Type="Tables" />
@@ -121,10 +123,6 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="Facture" EntitySet="Facture" />
           </AssociationSet>
-          <AssociationSet Name="FKFacture292552" Association="Self.FKFacture292552">
-            <End Role="Prestation" EntitySet="Prestation" />
-            <End Role="Facture" EntitySet="Facture" />
-          </AssociationSet>
           <AssociationSet Name="FKFacture569705" Association="Self.FKFacture569705">
             <End Role="Etat" EntitySet="Etat" />
             <End Role="Facture" EntitySet="Facture" />
@@ -132,6 +130,10 @@
           <AssociationSet Name="FKFacture840039" Association="Self.FKFacture840039">
             <End Role="Structure" EntitySet="Structure" />
             <End Role="Facture" EntitySet="Facture" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrestation198894" Association="Self.FKPrestation198894">
+            <End Role="Facture" EntitySet="Facture" />
+            <End Role="Prestation" EntitySet="Prestation" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -175,11 +177,10 @@
           <Property Name="IdEtat" Type="Int32" Nullable="false" />
           <Property Name="IdClient" Type="Int32" Nullable="false" />
           <Property Name="IdStructure" Type="Int32" Nullable="false" />
-          <Property Name="IdPrestation" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="Self.FKFacture214707" FromRole="Facture" ToRole="Client" />
           <NavigationProperty Name="Etat" Relationship="Self.FKFacture569705" FromRole="Facture" ToRole="Etat" />
-          <NavigationProperty Name="Prestation" Relationship="Self.FKFacture292552" FromRole="Facture" ToRole="Prestation" />
           <NavigationProperty Name="Structure" Relationship="Self.FKFacture840039" FromRole="Facture" ToRole="Structure" />
+          <NavigationProperty Name="Prestations" Relationship="Self.FKPrestation198894" FromRole="Facture" ToRole="Prestation" />
         </EntityType>
         <EntityType Name="Prestation">
           <Key>
@@ -189,7 +190,10 @@
           <Property Name="Intitule" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PrixUnitaire" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Factures" Relationship="Self.FKFacture292552" FromRole="Prestation" ToRole="Facture" />
+          <Property Name="Quantite" Type="Int32" Nullable="false" />
+          <Property Name="PrixTotal" Type="Int32" Nullable="false" />
+          <Property Name="IdFacture" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Facture" Relationship="Self.FKPrestation198894" FromRole="Prestation" ToRole="Facture" />
         </EntityType>
         <EntityType Name="Structure">
           <Key>
@@ -229,18 +233,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FKFacture292552">
-          <End Role="Prestation" Type="Self.Prestation" Multiplicity="1" />
-          <End Role="Facture" Type="Self.Facture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Prestation">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Facture">
-              <PropertyRef Name="IdPrestation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FKFacture840039">
           <End Role="Structure" Type="Self.Structure" Multiplicity="1" />
           <End Role="Facture" Type="Self.Facture" Multiplicity="*" />
@@ -250,6 +242,18 @@
             </Principal>
             <Dependent Role="Facture">
               <PropertyRef Name="IdStructure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKPrestation198894">
+          <End Role="Facture" Type="Self.Facture" Multiplicity="1" />
+          <End Role="Prestation" Type="Self.Prestation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Prestation">
+              <PropertyRef Name="IdFacture" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -267,13 +271,13 @@
             <End Role="Etat" EntitySet="Etats" />
             <End Role="Facture" EntitySet="Factures" />
           </AssociationSet>
-          <AssociationSet Name="FKFacture292552" Association="Self.FKFacture292552">
-            <End Role="Prestation" EntitySet="Prestations" />
-            <End Role="Facture" EntitySet="Factures" />
-          </AssociationSet>
           <AssociationSet Name="FKFacture840039" Association="Self.FKFacture840039">
             <End Role="Structure" EntitySet="Structures" />
             <End Role="Facture" EntitySet="Factures" />
+          </AssociationSet>
+          <AssociationSet Name="FKPrestation198894" Association="Self.FKPrestation198894">
+            <End Role="Facture" EntitySet="Factures" />
+            <End Role="Prestation" EntitySet="Prestations" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -317,7 +321,6 @@
                 <ScalarProperty Name="IdEtat" ColumnName="IdEtat" />
                 <ScalarProperty Name="IdClient" ColumnName="IdClient" />
                 <ScalarProperty Name="IdStructure" ColumnName="IdStructure" />
-                <ScalarProperty Name="IdPrestation" ColumnName="IdPrestation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -328,6 +331,9 @@
                 <ScalarProperty Name="Intitule" ColumnName="Intitule" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PrixUnitaire" ColumnName="PrixUnitaire" />
+                <ScalarProperty Name="Quantite" ColumnName="Quantite" />
+                <ScalarProperty Name="PrixTotal" ColumnName="PrixTotal" />
+                <ScalarProperty Name="IdFacture" ColumnName="IdFacture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
