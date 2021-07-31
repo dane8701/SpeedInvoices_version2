@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d109a93409054877bda69b0275943171" Name="Diagram1">
+        <EntityTypeShape EntityType="SpeedInvoicesModel.Client" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpeedInvoicesModel.Etat" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpeedInvoicesModel.Facture" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpeedInvoicesModel.Prestation" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpeedInvoicesModel.Structure" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="SpeedInvoicesModel.FKFacture214707" ManuallyRouted="false" />
+        <AssociationConnector Association="SpeedInvoicesModel.FKFacture569705" ManuallyRouted="false" />
+        <AssociationConnector Association="SpeedInvoicesModel.FKFacture292552" ManuallyRouted="false" />
+        <AssociationConnector Association="SpeedInvoicesModel.FKFacture840039" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
